@@ -1,0 +1,19 @@
+version: '3'
+# for deploy
+services:
+  db:
+    image: postgres:13
+    container_name: mtspremium_postgres_2
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=my-secret-pw
+      - POSTGRES_DB=postgres
+    volumes:
+      - ./docker_postgres_init.sql:/docker-entrypoint-initdb.d/docker_postgres_init.sql
+      - database_data:/var/lib/postgresql/data
+
+volumes:
+  database_data:
+    driver: local
