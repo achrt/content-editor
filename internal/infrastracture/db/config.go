@@ -3,7 +3,7 @@ package db
 import "fmt"
 
 type DBConfigSection struct {
-	Host     string `env:"DBHOST" envDefault:"192.168.99.100"`
+	Host     string `env:"DBHOST" envDefault:"localhost"`
 	Port     string `env:"DBPORT" envDefault:"5432"`
 	Database string `env:"DBNAME"`
 	Username string `env:"DB_USER_NAME"`

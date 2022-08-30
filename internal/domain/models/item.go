@@ -9,8 +9,8 @@ type Item struct {
 	Description    string     `json:"description"`
 	Type           int        `json:"type"`
 	ManufacturerID int        `json:"manufactirerID"`
-	UpdatedAt      *time.Time `json:"updatedAt" gorm:"type:timestamp"`
-	CreatedAt      time.Time  `json:"createdAt" gorm:"type:timestamp"`
+	UpdatedAt      *time.Time `json:"updatedAt" gorm:"type:timestampz"`
+	CreatedAt      time.Time  `json:"createdAt" gorm:"type:timestampz"`
 
-	Manufacturer *Manufacturer `json:"-" gorm:"->;foreign key:ManufacturerID"`
+	Manufacturer *Manufacturer `json:"-" gorm:"->;foreignkey:ManufacturerID"`
 }

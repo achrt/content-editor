@@ -8,6 +8,6 @@ type Manufacturer struct {
 	OfficialName string `json:"officialName"`
 	Address      string `json:"address"`
 
-	UpdatedAt *time.Time `json:"updatedAt" gorm:"type:timestamp"`
-	CreatedAt time.Time  `json:"createdAt" gorm:"type:timestamp"`
+	UpdatedAt *time.Time `json:"updatedAt" gorm:"type:timestampz"`
+	CreatedAt time.Time  `json:"createdAt" gorm:"type:timestampz"`
 }
