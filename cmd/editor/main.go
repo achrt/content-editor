@@ -3,7 +3,6 @@ package main
 import (
 	"content-editor/cmd/editor/application"
 	"content-editor/cmd/editor/handler"
-
 	"github.com/labstack/gommon/log"
 
 	"github.com/gofiber/fiber/v2"
