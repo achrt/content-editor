@@ -1,11 +1,11 @@
 package db
 
 import (
+	"content-editor/internal/domain/models"
 	"database/sql"
-	"time"
-
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+	"time"
 )
 
 func DBConnect(cfg *DBConfigSection) (db *gorm.DB, sqlDb *sql.DB, err error) {
@@ -18,7 +18,6 @@ func DBConnect(cfg *DBConfigSection) (db *gorm.DB, sqlDb *sql.DB, err error) {
 	if err != nil {
 		return nil, nil, err
 	}
-
 	sqlDB, err := db.DB()
 	if err != nil {
 		return nil, nil, err
@@ -28,6 +27,7 @@ func DBConnect(cfg *DBConfigSection) (db *gorm.DB, sqlDb *sql.DB, err error) {
 		return nil, nil, err
 	}
 	sqlDB.SetConnMaxLifetime(time.Second * 20)
+	db.AutoMigrate(models.Catalogue{}, models.Item{}, models.Manufacturer{})
 
 	return db, sqlDB, nil
 }

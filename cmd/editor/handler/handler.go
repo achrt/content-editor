@@ -20,7 +20,20 @@ func New(app *application.App) *Handler {
 
 func (h *Handler) Route(r fiber.Router) {
 	r.Get("/catalogue/:id", h.Read)
+	r.Get("/catalogue/del/:id", h.Delete)
+	r.Post("/catalogue/up", h.Update)
 	r.Post("/catalogue", h.Create)
+}
+
+func (h *Handler) Delete(c *fiber.Ctx) error {
+	id, err := h.paramInt(c, "id")
+	if err != nil {
+		return fiber.ErrBadRequest
+	}
+	if err := h.catalogue.Delete(id); err != nil {
+		return fiber.ErrBadRequest
+	}
+	return c.SendStatus(fiber.StatusOK)
 }
 
 func (h *Handler) Read(c *fiber.Ctx) error {
@@ -28,11 +41,11 @@ func (h *Handler) Read(c *fiber.Ctx) error {
 	if err != nil {
 		return fiber.ErrBadRequest
 	}
-
 	cat, err := h.catalogue.Find(id)
 	if err != nil {
 		return fiber.ErrInternalServerError
 	}
+
 	return c.Status(fiber.StatusOK).JSON(cat)
 }
 
@@ -44,7 +57,24 @@ func (h *Handler) Create(c *fiber.Ctx) error {
 	}
 
 	// TODO: дописать метод создания каталога
+	_, err := h.catalogue.Create(&catalogue)
+	if err != nil {
+		return fiber.ErrInternalServerError
+	}
+	return c.SendStatus(fiber.StatusOK)
+}
 
+func (h *Handler) Update(c *fiber.Ctx) error {
+
+	catalogue := models.Catalogue{}
+	if err := c.BodyParser(&catalogue); err != nil {
+		return fiber.ErrBadRequest
+	}
+
+	// TODO: дописать метод создания каталога
+	if err := h.catalogue.Update(&catalogue); err != nil {
+		return fiber.ErrInternalServerError
+	}
 	return c.SendStatus(fiber.StatusOK)
 }
 
