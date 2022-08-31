@@ -4,6 +4,7 @@ package application
 
 import (
 	"content-editor/internal/infrastracture/db"
+	"github.com/caarlos0/env/v6"
 )
 
 type Config struct {
@@ -15,6 +16,9 @@ type Config struct {
 // данные для постреса в docker_postgres_init.sql
 func (c *Config) loadConfiguration() error {
 
-	// c.Address =
+	if err := env.Parse(c); err != nil {
+		return err
+	}
+
 	return nil
 }

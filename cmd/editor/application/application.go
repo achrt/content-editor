@@ -1,6 +1,7 @@
 package application
 
 import (
+	"fmt"
 	"github.com/gofiber/fiber/v2"
 	"github.com/labstack/gommon/log"
 
@@ -23,21 +24,21 @@ func New(router *fiber.App) (*App, error) {
 		return nil, err
 	}
 
-	dbc, sqlDb, err := db.DBConnect(&cfg.DBConfigSection)
+	dbc, _, err := db.DBConnect(&cfg.DBConfigSection)
 	if err != nil {
 		return nil, err
 	}
-	defer sqlDb.Close()
+	//defer sqlDb.Close()
 
 	app := &App{
 		Router: router,
 	}
-
 	app.Catalogue = catalogue.New(dbc)
+	app.address = cfg.Address
 	return app, nil
 }
 
 func (a *App) Run() error {
-	a.Log.Infof("starting service at: http://%s", a.address)
+	fmt.Printf("starting service at: http://%s", a.address)
 	return a.Router.Listen(a.address)
 }

@@ -3,6 +3,7 @@ module content-editor
 go 1.18
 
 require (
+	github.com/caarlos0/env/v6 v6.10.0
 	github.com/gofiber/fiber/v2 v2.36.0
 	github.com/labstack/gommon v0.3.1
 	gorm.io/driver/postgres v1.3.9

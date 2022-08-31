@@ -36,14 +36,27 @@ func (r *Repository) CreateTx(Catalogue *models.Catalogue, tx *gorm.DB) (*models
 
 // TODO: дописать методы
 func (r *Repository) Update(cat *models.Catalogue) error {
+	if err := r.db.Updates(&cat).Error; err != nil {
+		return err
+	}
 	return nil
 }
 
 func (r *Repository) Delete(id int) error {
+	if err := r.db.Delete(&models.Catalogue{}, id).Error; err != nil {
+		return err
+	}
 	return nil
 }
 
 func (r *Repository) Find(id int) (*models.Catalogue, error) {
-	return nil, nil
-}
+	var catalogue models.Catalogue
+	if err := r.db.Find(&catalogue, id).Error; err != nil {
+		return nil, err
+	}
+	if catalogue.ID == 0 {
+		return nil, nil
+	}
 
+	return &catalogue, nil
+}
